@@ -1,0 +1,33 @@
+% === Slide: <<NAME>> ===
+% LAYOUT: image-stack — full-bleed background image, translucent cards stacked
+% in a LEFT column; the right ~half of the image stays visible.
+% Cards: anchor north west, x = 0.03pw, tops at 0.16 / 0.43 / 0.70 ph (pitch 0.27ph).
+%   2 cards: tops 0.18 / 0.50 ph, minimum height 0.26ph.
+% Mirror to the right column: use xshift=0.54\paperwidth.
+\NoirBackgroundImage{<<IMAGE_FILE>>}
+\begin{frame}{<<FRAME_TITLE>>}
+\begin{tikzpicture}[remember picture, overlay,
+    infobox/.style={
+        fill=NoirBg, fill opacity=0.72, text opacity=1,
+        rounded corners=6pt,
+        text width=0.43\paperwidth,
+        align=left, inner sep=10pt,
+        anchor=north west,
+        minimum height=0.20\paperheight
+    }
+]
+  \node[infobox] at ([xshift=0.03\paperwidth, yshift=-0.16\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<CARD_1_HEADING>>}\\[5pt]
+    {\scriptsize\color{NoirText} <<CARD_1_TEXT>>}%
+  };
+  \node[infobox] at ([xshift=0.03\paperwidth, yshift=-0.43\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<CARD_2_HEADING>>}\\[5pt]
+    {\scriptsize\color{NoirText} <<CARD_2_TEXT>>}%
+  };
+  \node[infobox] at ([xshift=0.03\paperwidth, yshift=-0.70\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<CARD_3_HEADING>>}\\[5pt]
+    {\scriptsize\color{NoirText} <<CARD_3_TEXT>>}%
+  };
+\end{tikzpicture}
+\end{frame}
+\NoirBackgroundReset

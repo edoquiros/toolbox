@@ -1,0 +1,60 @@
+% === Slide: <<NAME>> ===
+% LAYOUT: diagram — black slide with a hand-placed TikZ diagram on a fixed
+% canvas directly under the title band (pipelines, architectures, data flows).
+% Canvas: x 0..13.5, y 0..6.3 growing DOWN (1 unit = 1cm). If you add a
+% footer line/legend below, keep the diagram within y <= 6.0.
+% Default skeleton (replace freely):
+%   ┌──────────┐ ═▶ ┌──────────────────────┐
+%   │  A (tall)│    │ B                    │
+%   │ dashed   │    └──────────┬───────────┘
+%   │          │               ▼
+%   │          │    ┌──────────────────────┐
+%   └──────────┘    │ C (solid / result)   │
+%                   └──────────────────────┘
+% Panel vocabulary:
+%   panel        dashed muted border  -> inputs / intermediate artefacts
+%   panel solid  solid muted border   -> outcomes / components
+%   panel strong 2pt border           -> the key result (use once per slide)
+% Arrows use NoirFlow; text colour roles: NoirAccent labels, NoirCyan tokens.
+\NoirBackgroundVoid
+\begin{frame}{<<FRAME_TITLE>>}
+\vspace{-0.10cm}
+\centering
+\begin{tikzpicture}[x=1cm, y=-1cm, baseline=(current bounding box.north),
+    panel/.style={rounded corners=8pt, fill=NoirBg, fill opacity=0.75,
+                  draw=NoirMuted!55, line width=0.8pt, dashed},
+    panel solid/.style={panel, solid, draw=NoirMuted!80, line width=0.9pt},
+    panel strong/.style={panel, solid, draw=NoirMuted!80, line width=2.0pt},
+    ptitle/.style={font=\small\bfseries, text=NoirText, anchor=north},
+    pbody/.style={font=\scriptsize, text=NoirText, anchor=north west, align=left},
+    bigarrow/.style={-{Latex[length=13pt, width=9pt]}, draw=NoirFlow, line width=4pt},
+    arrow/.style={-{Latex[length=10pt, width=8pt]}, draw=NoirFlow, line width=2.5pt},
+    thinarrow/.style={-{Latex[length=5pt, width=4pt]}, draw=NoirFlow, line width=1.8pt}
+]
+%── A: left, full height ──────────────────────────────────────────────
+\draw[panel] (0.0, 0.0) rectangle (5.5, 6.3);
+\node[ptitle, text width=5.0cm, align=center] at (2.75, 0.20) {<<PANEL_A_TITLE>>};
+\node[pbody, text width=4.9cm] at (0.30, 0.72) {%
+    {\color{NoirAccent}\bfseries <<PANEL_A_LABEL>>:}\ <<PANEL_A_TEXT>>%
+};
+
+%── A → B ────────────────────────────────────────────────────────────
+\draw[bigarrow] (5.58, 2.10) -- (6.02, 2.10);
+
+%── B: right-top ─────────────────────────────────────────────────────
+\draw[panel] (6.10, 0.0) rectangle (13.5, 3.55);
+\node[ptitle, anchor=north west] at (6.35, 0.20) {<<PANEL_B_TITLE>>};
+\node[pbody, text width=6.6cm] at (6.25, 0.72) {<<PANEL_B_TEXT>>};
+
+%── B → C ────────────────────────────────────────────────────────────
+\draw[arrow] (9.80, 3.62) -- (9.80, 4.25);
+
+%── C: right-bottom (result) ─────────────────────────────────────────
+\draw[panel solid] (6.10, 4.35) rectangle (13.5, 6.30);
+\node[font=\small, text=NoirText, text width=5.5cm, align=center]
+    at (9.80, 5.33) {<<PANEL_C_TEXT>>};
+\end{tikzpicture}
+\par\vspace{2pt}%
+{\tiny\color{NoirMuted}<<FOOTNOTE_OR_SOURCE>>}%
+\end{frame}
+\NoirBackgroundReset

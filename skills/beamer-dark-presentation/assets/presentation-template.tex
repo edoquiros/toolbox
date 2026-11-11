@@ -1,0 +1,175 @@
+\documentclass[aspectratio=169]{beamer}
+% Paper is 16cm x 9cm. Compile with: latexmk -pdf -interaction=nonstopmode <file>.tex
+% (two passes are required: the footline navigator and every `remember picture`
+%  overlay read positions/total-frame counts from the .aux file).
+
+\usetheme{default}
+\usefonttheme{professionalfonts}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[<<BABEL_LANGUAGE>>]{babel}
+\IfFileExists{montserrat.sty}{\usepackage{montserrat}}{\usepackage[scaled=0.95]{helvet}}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta}
+
+% ── Palette ──────────────────────────────────────────────────────────────────
+% Core (structural) colors
+\definecolor{NoirBg}{HTML}{111317}      % canvas
+\definecolor{NoirPanel}{HTML}{1A1F26}   % title band, zebra rows, panels
+\definecolor{NoirText}{HTML}{F2EEE6}    % body text
+\definecolor{NoirMuted}{HTML}{CFC8BB}   % secondary text, captions, borders
+\definecolor{NoirAccent}{HTML}{D39A3C}  % amber: headings, bullets, progress
+% Highlight colors (data emphasis, diagrams)
+\definecolor{NoirCyan}{HTML}{00D4C8}    % "best"/positive values, code tokens
+\definecolor{NoirPink}{HTML}{D81B9F}    % negative/alert values
+\definecolor{NoirNavy}{HTML}{0A2540}    % fills for diagram shapes
+\definecolor{NoirLink}{HTML}{00ACC1}    % rules, outlines, connectors
+\colorlet{NoirFlow}{blue!55!white}     % diagram arrows / flow connectors
+
+\setbeamercolor{background canvas}{bg=NoirBg}
+\setbeamercolor{normal text}{fg=NoirText,bg=NoirBg}
+\setbeamercolor{frametitle}{fg=NoirText,bg=NoirPanel}
+\setbeamercolor{title}{fg=NoirAccent}
+\setbeamercolor{subtitle}{fg=NoirText}
+\setbeamercolor{structure}{fg=NoirAccent}
+\setbeamercolor{itemize item}{fg=NoirAccent}
+\setbeamercolor{itemize subitem}{fg=NoirAccent}
+\setbeamercolor{caption name}{fg=NoirMuted}
+\setbeamercolor{caption}{fg=NoirMuted}
+\setbeamerfont{title}{series=\bfseries,size=\Large}
+\setbeamerfont{frametitle}{series=\bfseries,size=\large}
+\setbeamerfont{normal text}{size=\normalsize}
+\renewcommand{\familydefault}{\sfdefault}
+
+% ── Navigation: progress squares (bottom-right), no beamer nav symbols ──────
+% One square per frame; amber = visited/current, dimmed = upcoming.
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.4ex,dp=1.1ex,leftskip=0pt,rightskip=0.8em]{author in head/foot}%
+      \hfill%
+      \begin{tikzpicture}[baseline=(current bounding box.center)]
+        \pgfmathtruncatemacro{\CurrentFrame}{\insertframenumber}
+        \pgfmathtruncatemacro{\TotalFrames}{max(1,\inserttotalframenumber)}
+        \foreach \i in {1,...,\TotalFrames} {%
+          \pgfmathsetmacro{\x}{(\i-1)*0.15}
+          \ifnum\i>\CurrentFrame
+            \fill[NoirMuted!35!NoirBg] (\x,0) rectangle ++(0.10,0.10);
+          \else
+            \fill[NoirAccent] (\x,0) rectangle ++(0.10,0.10);
+          \fi
+        }
+      \end{tikzpicture}%
+    \end{beamercolorbox}%
+  }%
+}
+\setbeameroption{hide notes}
+
+% ── Per-slide backgrounds ────────────────────────────────────────────────────
+% Convention: every slide block is  \NoirBackground...  +  frame  +  \NoirBackgroundReset
+% so a block can be inserted, moved or deleted without affecting its neighbours.
+% A missing image renders a labelled placeholder instead of failing the build.
+\newcommand{\NoirMissingImage}[3]{% #1 width, #2 height, #3 file name
+  {\setlength{\fboxsep}{0pt}\colorbox{NoirPanel}{\parbox[c][#2][c]{#1}{\centering
+    \color{NoirMuted}\ttfamily\scriptsize missing image: \detokenize{#3}}}}}
+% Full-bleed image covering the whole slide (stretched to 16:9).
+\newcommand{\NoirBackgroundImage}[1]{%
+  \usebackgroundtemplate{%
+    \IfFileExists{#1}%
+      {\includegraphics[width=\paperwidth,height=\paperheight]{#1}}%
+      {\NoirMissingImage{\paperwidth}{\paperheight}{#1}}}}
+% Pure black slide with an image banner hung just below the title band.
+\newcommand{\NoirBackgroundBanner}[1]{%
+  \usebackgroundtemplate{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \fill[black] (current page.south west) rectangle (current page.north east);
+      \node[anchor=north, inner sep=0pt] at ([yshift=-0.13\paperheight] current page.north) {%
+        \IfFileExists{#1}%
+          {\includegraphics[width=\paperwidth]{#1}}%
+          {\NoirMissingImage{\paperwidth}{0.55\paperheight}{#1}}};
+    \end{tikzpicture}}}
+% Pure black slide (used for diagrams, tables and text-only cards).
+\newcommand{\NoirBackgroundVoid}{%
+  \usebackgroundtemplate{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \fill[black] (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}}}
+% Back to the default NoirBg canvas. NOTE: \usebackgroundtemplate{} is NOT a reset:
+% it installs an empty template and the slide renders WHITE. Restore the default.
+\newcommand{\NoirBackgroundReset}{\setbeamertemplate{background canvas}[default]}
+
+% ── Metadata ─────────────────────────────────────────────────────────────────
+\title[<<SHORT_TITLE>>]{<<TITLE>>}
+\subtitle{<<SUBTITLE>>}
+\author{<<AUTHOR>>}
+\institute{<<INSTITUTE_OR_COURSE>>}
+\date{\today}
+
+\begin{document}
+
+% ── Slides go here ────────────────────────────────────────────────────────────
+% Each slide is delimited by a banner comment:  % === Slide: <name> ===
+
+% === Slide: Title ===
+\begin{frame}
+\centering
+\begin{tikzpicture}[x=0.95cm, y=0.95cm,
+    every node/.style={inner sep=0pt, outer sep=0pt},
+    bighex/.style={regular polygon, regular polygon sides=6,
+        draw=NoirCyan, line width=1.2pt, fill=NoirNavy, minimum size=2.6cm,
+        text=NoirCyan, font=\small\bfseries, align=center, inner sep=3pt,
+        text width=1.5cm},  % keep the core keyword to 1–2 short words
+    sathex/.style={regular polygon, regular polygon sides=6,
+        fill=NoirCyan, draw=none, minimum size=1.4cm,
+        text=NoirBg, font=\tiny\bfseries, align=center, inner sep=2pt},
+    dimhex/.style={regular polygon, regular polygon sides=6,
+        draw=NoirCyan!50, line width=0.7pt, fill=NoirNavy!80, minimum size=1.1cm,
+        text=NoirText, font=\tiny, align=center, inner sep=2pt},
+    dot/.style={circle, fill=NoirPink, minimum size=0.34cm},
+    netline/.style={draw=NoirCyan!45, line width=0.7pt},
+    dotline/.style={draw=NoirPink!65, line width=0.6pt}
+]
+% Invisible canvas frame (keeps the bounding box stable): 14.7 x 8.6 units = 13.97 x 8.17cm,
+% i.e. exactly the 16:9 text area. Keep every element inside it.
+\path (0,0) rectangle (14.7,8.6);
+
+% ── Left: kicker + title + rule ──────────────────────────────────────────────
+\node[anchor=north west, font=\LARGE\bfseries, text=NoirAccent]
+    at (0.20, 8.50) {\insertshorttitle};
+\node[anchor=north west, font=\large\bfseries, text=NoirText,
+      text width=6.5cm, align=left]
+    at (0.20, 7.75) {\inserttitle};
+\node[anchor=north west, font=\small, text=NoirMuted,
+      text width=6.5cm, align=left]
+    at (0.20, 5.05) {\insertsubtitle};
+\draw[NoirLink, line width=0.7pt] (0.20, 5.30) -- (6.80, 5.30);
+
+% ── Right: decorative hexagon network (relabel or replace with \includegraphics)
+\node[bighex] (core) at (11.60, 4.50) {<<CORE_KEYWORD>>};
+\node[sathex] (n1) at (11.60, 6.80) {};
+\node[dimhex] (n2) at (14.00, 5.40) {};
+\node[dimhex] (n3) at (9.20, 5.60) {};
+\node[dimhex] (n4) at (9.10, 3.20) {};
+\node[sathex, minimum size=1.1cm] (n5) at (11.60, 2.30) {};
+\node[dot] (d1) at (12.40, 5.90) {};
+\node[dot] (d2) at (12.90, 4.10) {};
+\node[dot] (d3) at (10.40, 3.40) {};
+\foreach \a/\b in {core/n1, core/n2, core/n3, core/n4, core/n5, n1/n2, n3/n1, n4/n3, n4/n5}
+    \draw[netline] (\a) -- (\b);
+\foreach \a/\b in {d1/n1, d1/n2, d2/n2, d2/n5, d3/n4, d3/n5}
+    \draw[dotline] (\a) -- (\b);
+
+% ── Bottom: byline box ───────────────────────────────────────────────────────
+\node[draw=NoirLink, line width=0.9pt, rounded corners=4pt,
+      font=\small, text=NoirText, text width=12.5cm, align=center, inner sep=7pt]
+    at (7.50, 0.55) {\insertauthor, \insertinstitute};
+\end{tikzpicture}
+\end{frame}
+
+% ── Insert new slides above this line ────────────────────────────────────────
+\end{document}

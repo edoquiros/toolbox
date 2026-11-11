@@ -1,0 +1,37 @@
+% === Slide: <<NAME>> ===
+% LAYOUT: banner-columns — black slide, image banner hung under the title band,
+% equal-height translucent cards anchored NORTH at 0.44ph overlapping the
+% lower part of the banner (icons/illustrations sit above each card).
+% Optional \framesubtitle (delete the line if unused).
+% 3 cards: x = 0.14 / 0.50 / 0.86 pw, text width 0.22pw, minimum height 0.38ph.
+% 2 cards: x = 0.27 / 0.73 pw, text width 0.36pw.
+% 4 cards: x = 0.13 / 0.38 / 0.62 / 0.87 pw, text width 0.17pw.
+% Design the banner image so its focal points line up with the card centres.
+\NoirBackgroundBanner{<<IMAGE_FILE>>}
+\begin{frame}{<<FRAME_TITLE>>}
+\framesubtitle{<<FRAME_SUBTITLE>>}
+\begin{tikzpicture}[remember picture, overlay,
+    colbox/.style={
+        fill=NoirBg, fill opacity=0.72, text opacity=1,
+        rounded corners=6pt,
+        text width=0.22\paperwidth,
+        align=left, inner sep=10pt,
+        anchor=north,
+        minimum height=0.38\paperheight
+    }
+]
+  \node[colbox] at ([xshift=0.14\paperwidth, yshift=-0.44\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<COL_1_HEADING>>}\\[5pt]
+    {\scriptsize\color{NoirText} <<COL_1_TEXT>>}%
+  };
+  \node[colbox] at ([xshift=0.50\paperwidth, yshift=-0.44\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<COL_2_HEADING>>}\\[5pt]
+    {\scriptsize\color{NoirText} <<COL_2_TEXT>>}%
+  };
+  \node[colbox] at ([xshift=0.86\paperwidth, yshift=-0.44\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<COL_3_HEADING>>}\\[5pt]
+    {\scriptsize\color{NoirText} <<COL_3_TEXT>>}%
+  };
+\end{tikzpicture}
+\end{frame}
+\NoirBackgroundReset

@@ -1,0 +1,40 @@
+% === Slide: Agenda ===
+% LAYOUT: agenda — numbered rows on the default NoirBg canvas.
+% Geometry (y grows DOWN, 1 unit = 1cm, content width 13.5):
+%   row i (1-based): top = (i-1)*1.08, bottom = top + 1.00
+%   badge centre y = top + 0.50, title y = top + 0.37, description y = top + 0.67
+%   fill alternates NoirPanel (odd rows) / NoirBg (even rows). Max 6 rows.
+% To add a row: copy one block, increment the number, shift every y by +1.08.
+\begin{frame}{<<FRAME_TITLE>>}
+\vspace{-0.10cm}
+\centering
+\begin{tikzpicture}[x=1cm, y=-1cm, baseline=(current bounding box.north),
+    agtitle/.style={anchor=west, font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{NoirText}},
+    agdesc/.style={anchor=west, font=\fontsize{6}{7.5}\selectfont\color{NoirMuted}},
+    agnum/.style={font=\fontsize{7.5}{9}\selectfont\bfseries\color{NoirBg}}
+]
+%% Row 1
+\fill[NoirPanel, rounded corners=3pt] (0.0,0.00) rectangle (13.5,1.00);
+\fill[NoirAccent] (0.0,0.00) rectangle (0.07,1.00);
+\fill[NoirAccent] (0.55,0.50) circle (0.28cm);
+\node[agnum] at (0.55,0.50) {1};
+\node[agtitle] at (1.05,0.37) {<<ITEM_1_TITLE>>};
+\node[agdesc]  at (1.05,0.67) {<<ITEM_1_DESCRIPTION>>};
+
+%% Row 2
+\fill[NoirBg, rounded corners=3pt] (0.0,1.08) rectangle (13.5,2.08);
+\fill[NoirAccent] (0.0,1.08) rectangle (0.07,2.08);
+\fill[NoirAccent] (0.55,1.58) circle (0.28cm);
+\node[agnum] at (0.55,1.58) {2};
+\node[agtitle] at (1.05,1.45) {<<ITEM_2_TITLE>>};
+\node[agdesc]  at (1.05,1.75) {<<ITEM_2_DESCRIPTION>>};
+
+%% Row 3
+\fill[NoirPanel, rounded corners=3pt] (0.0,2.16) rectangle (13.5,3.16);
+\fill[NoirAccent] (0.0,2.16) rectangle (0.07,3.16);
+\fill[NoirAccent] (0.55,2.66) circle (0.28cm);
+\node[agnum] at (0.55,2.66) {3};
+\node[agtitle] at (1.05,2.53) {<<ITEM_3_TITLE>>};
+\node[agdesc]  at (1.05,2.83) {<<ITEM_3_DESCRIPTION>>};
+\end{tikzpicture}
+\end{frame}

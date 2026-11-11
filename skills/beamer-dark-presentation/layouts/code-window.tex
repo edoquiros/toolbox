@@ -1,0 +1,34 @@
+% === Slide: <<NAME>> ===
+% LAYOUT: code-window — a single centred monospace box (prompt, code, I/O
+% example) over a full-bleed image (typically a "window"/terminal frame image).
+% Box: centre (0.50pw, 0.55ph), text width 0.61pw, minimum height 0.66ph,
+% opacity 0.82 (most opaque card: text legibility first).
+% Token colouring convention inside the box:
+%   \textcolor{NoirAccent}{\bfseries Label:}  section labels (Question:, Answer:)
+%   \textcolor{NoirCyan}{<token>}             variables / placeholders / outputs
+%   \textcolor{NoirMuted}{...}                 de-emphasised text
+% Escape _ as \_ and use \\[2pt] between lines, \\[5pt]/\\[8pt] between sections.
+% Use with \NoirBackgroundVoid instead if no window image is available.
+\NoirBackgroundImage{<<IMAGE_FILE>>}
+\begin{frame}{<<FRAME_TITLE>>}
+\begin{tikzpicture}[remember picture, overlay,
+    codebox/.style={
+        fill=NoirBg, fill opacity=0.82, text opacity=1,
+        rounded corners=6pt,
+        text width=0.61\paperwidth,
+        align=left, inner sep=16pt,
+        anchor=center,
+        minimum height=0.66\paperheight
+    }
+]
+  \node[codebox] at ([xshift=0.50\paperwidth, yshift=-0.55\paperheight] current page.north west) {%
+    {\scriptsize\color{NoirText}\ttfamily
+      \textcolor{NoirAccent}{\bfseries <<SECTION_1_LABEL>>}\\[5pt]
+      <<SECTION_1_LINES>>\\[8pt]
+      \textcolor{NoirAccent}{\bfseries <<SECTION_2_LABEL>>}\\[5pt]
+      <<SECTION_2_LINES>>%
+    }%
+  };
+\end{tikzpicture}
+\end{frame}
+\NoirBackgroundReset

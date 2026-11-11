@@ -1,0 +1,86 @@
+% === Slide: <<NAME>> ===
+% LAYOUT: table — black slide, optional one-paragraph lead, then a results
+% table drawn in TikZ (not tabular) so every row/cell can be coloured freely.
+% Delete the LEAD block if you only want the table.
+%
+% Geometry (y DOWN, 1 unit = 1cm, total width 13.5):
+%   label column: 0 .. L   (L = 4.0–4.5; widen for long row labels)
+%   K data columns share (13.5 - L) equally: w = (13.5 - L)/K
+%   centre of data column j (1-based) = L + (j - 0.5)*w
+%     L=4.0,K=4 -> 5.19, 7.56, 9.94, 12.31      L=4.5,K=4 -> 5.625, 7.875, 10.125, 12.375
+%     L=4.0,K=5 -> 4.95, 6.85, 8.75, 10.65, 12.55
+%   header: 0 .. 0.62 (NoirPanel, amber underline)
+%   highlighted row: 0.62 .. 1.32 (amber-tinted, amber rules)
+%   other rows: height 0.68, alternate NoirBg / NoirPanel; text at row middle
+%   bottom B = 1.32 + 0.68*(number of other rows); footnote at B + 0.16
+%   max ~7 body rows with a lead paragraph, ~9 without.
+% Cell styles: th, rowlabel, rowlabel best, td, td best (NoirCyan), td worst (NoirPink).
+\NoirBackgroundVoid
+\begin{frame}{<<FRAME_TITLE>>}
+\vspace{-0.08cm}
+%% LEAD (optional) ────────────────────────────────────────────────────
+{\fontsize{7}{9.5}\selectfont\color{NoirText}%
+  \textbf{\color{NoirAccent}<<KEY_FINDING>>}
+  <<SUPPORTING_SENTENCES>>%
+}\par\vspace{0.14cm}
+%% END LEAD ───────────────────────────────────────────────────────────
+\centering
+\begin{tikzpicture}[x=1cm, y=-1cm, baseline=(current bounding box.north),
+    cell/.style={font=\fontsize{7}{8.5}\selectfont},
+    th/.style={cell, anchor=center, font=\fontsize{7}{8.5}\selectfont\bfseries, text=NoirAccent},
+    rowlabel/.style={cell, anchor=west, text=NoirText},
+    rowlabel best/.style={rowlabel, font=\fontsize{7}{8.5}\selectfont\bfseries, text=NoirAccent},
+    td/.style={cell, anchor=center, text=NoirMuted},
+    td best/.style={td, font=\fontsize{7}{8.5}\selectfont\bfseries, text=NoirCyan},
+    td worst/.style={td, text=NoirPink!80!NoirMuted}
+]
+%% === HEADER ===
+\fill[NoirPanel] (0.0, 0.0) rectangle (13.5, 0.62);
+\draw[NoirAccent, line width=1.0pt] (0.0, 0.62) -- (13.5, 0.62);
+\node[th, anchor=west] at (0.15, 0.31) {<<LABEL_HEADER>>};
+\node[th] at (5.19, 0.31)  {<<COL_1>>};
+\node[th] at (7.56, 0.31)  {<<COL_2>>};
+\node[th] at (9.94, 0.31)  {<<COL_3>>};
+\node[th] at (12.31, 0.31) {<<COL_4>>};
+\draw[NoirMuted!30, line width=0.4pt] (4.00, 0.0) -- (4.00, 3.36);
+
+%% === HIGHLIGHTED ROW ===
+\fill[NoirAccent!15!black] (0.0, 0.62) rectangle (13.5, 1.32);
+\draw[NoirAccent, line width=0.8pt] (0.0, 0.62) -- (13.5, 0.62);
+\draw[NoirAccent, line width=0.8pt] (0.0, 1.32) -- (13.5, 1.32);
+\node[rowlabel best] at (0.15, 0.97) {<<BEST_ROW_LABEL>>};
+\node[td best] at (5.19, 0.97)  {<<V>>};
+\node[td best] at (7.56, 0.97)  {<<V>>};
+\node[td best] at (9.94, 0.97)  {<<V>>};
+\node[td best] at (12.31, 0.97) {<<V>>};
+
+%% === BODY ROWS (alternating fills) ===
+\fill[NoirBg]    (0.0, 1.32) rectangle (13.5, 2.00);
+\fill[NoirPanel] (0.0, 2.00) rectangle (13.5, 2.68);
+\fill[NoirBg]    (0.0, 2.68) rectangle (13.5, 3.36);
+
+\node[rowlabel] at (0.15, 1.66) {<<ROW_1_LABEL>>};
+\node[td] at (5.19, 1.66)  {<<V>>};
+\node[td] at (7.56, 1.66)  {<<V>>};
+\node[td] at (9.94, 1.66)  {<<V>>};
+\node[td] at (12.31, 1.66) {<<V>>};
+
+\node[rowlabel] at (0.15, 2.34) {<<ROW_2_LABEL>>};
+\node[td] at (5.19, 2.34)  {<<V>>};
+\node[td] at (7.56, 2.34)  {<<V>>};
+\node[td] at (9.94, 2.34)  {<<V>>};
+\node[td] at (12.31, 2.34) {<<V>>};
+
+\node[rowlabel] at (0.15, 3.02) {<<ROW_3_LABEL>>};
+\node[td worst] at (5.19, 3.02)  {<<V>>};
+\node[td worst] at (7.56, 3.02)  {<<V>>};
+\node[td worst] at (9.94, 3.02)  {<<V>>};
+\node[td worst] at (12.31, 3.02) {<<V>>};
+
+%% === OUTER BORDER + FOOTNOTE ===
+\draw[NoirMuted!45, line width=0.8pt] (0.0, 0.0) rectangle (13.5, 3.36);
+\node[anchor=north west, font=\fontsize{5.5}{7}\selectfont\color{NoirMuted}]
+    at (0.0, 3.52) {<<METRIC_NOTE>> {\color{NoirCyan}Cyan} = <<BEST_MEANING>>.};
+\end{tikzpicture}
+\end{frame}
+\NoirBackgroundReset

@@ -1,0 +1,25 @@
+% === Slide: <<NAME>> ===
+% LAYOUT: image-callout — full-bleed illustration occupies the upper ~60% of the
+% slide; one wide translucent card across the bottom explains it.
+% Card: anchor north west at (0.07pw, 0.62ph), text width 0.86pw,
+% minimum height 0.38ph, opacity 0.65 (lighter than other cards so the
+% image reads through). Keep the image's subject above y = 0.60ph.
+\NoirBackgroundImage{<<IMAGE_FILE>>}
+\begin{frame}{<<FRAME_TITLE>>}
+\begin{tikzpicture}[remember picture, overlay,
+    infobox/.style={
+        fill=NoirBg, fill opacity=0.65, text opacity=1,
+        rounded corners=6pt,
+        text width=0.86\paperwidth,
+        align=left, inner sep=14pt,
+        anchor=north west,
+        minimum height=0.38\paperheight
+    }
+]
+  \node[infobox] at ([xshift=0.07\paperwidth, yshift=-0.62\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<HEADING>>}\\[6pt]
+    {\footnotesize\color{NoirText} <<TEXT>>}%
+  };
+\end{tikzpicture}
+\end{frame}
+\NoirBackgroundReset

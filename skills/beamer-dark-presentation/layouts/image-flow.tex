@@ -1,0 +1,40 @@
+% === Slide: <<NAME>> ===
+% LAYOUT: image-flow — full-bleed background image, a horizontal sequence of
+% centred translucent cards joined by thick amber arrows (process / pipeline).
+% 3 cards: centres x = 0.17 / 0.50 / 0.83 pw, y = 0.54 ph, text width 0.25pw.
+% 2 cards: centres x = 0.27 / 0.73 pw, text width 0.34pw.
+% 4 cards: centres x = 0.13 / 0.38 / 0.62 / 0.87 pw, text width 0.17pw,
+%          arrow length 10pt, line width 3pt.
+% Each card has a heading, an italic muted sub-label and a body.
+\NoirBackgroundImage{<<IMAGE_FILE>>}
+\begin{frame}{<<FRAME_TITLE>>}
+\begin{tikzpicture}[remember picture, overlay,
+    flowbox/.style={
+        fill=NoirBg, fill opacity=0.72, text opacity=1,
+        rounded corners=6pt,
+        text width=0.25\paperwidth,
+        align=left, inner sep=10pt,
+        anchor=center
+    },
+    flowarrow/.style={-{Latex[length=16pt, width=10pt]}, draw=NoirAccent, line width=5pt}
+]
+  \node[flowbox] (s1) at ([xshift=0.17\paperwidth, yshift=-0.54\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<STEP_1_HEADING>>}\\[4pt]
+    {\tiny\color{NoirMuted}\itshape <<STEP_1_SUBLABEL>>}\\[7pt]
+    {\scriptsize\color{NoirText} <<STEP_1_TEXT>>}%
+  };
+  \node[flowbox] (s2) at ([xshift=0.50\paperwidth, yshift=-0.54\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<STEP_2_HEADING>>}\\[4pt]
+    {\tiny\color{NoirMuted}\itshape <<STEP_2_SUBLABEL>>}\\[7pt]
+    {\scriptsize\color{NoirText} <<STEP_2_TEXT>>}%
+  };
+  \node[flowbox] (s3) at ([xshift=0.83\paperwidth, yshift=-0.54\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<STEP_3_HEADING>>}\\[4pt]
+    {\tiny\color{NoirMuted}\itshape <<STEP_3_SUBLABEL>>}\\[7pt]
+    {\scriptsize\color{NoirText} <<STEP_3_TEXT>>}%
+  };
+  \draw[flowarrow] (s1.east) -- (s2.west);
+  \draw[flowarrow] (s2.east) -- (s3.west);
+\end{tikzpicture}
+\end{frame}
+\NoirBackgroundReset

@@ -1,0 +1,36 @@
+% === Slide: <<NAME>> ===
+% LAYOUT: columns — black slide, tall centred cards, no image. Use for
+% "key contributions", "three ideas", comparisons.
+% 3 cards: centres x = 0.17 / 0.50 / 0.83 pw, y = 0.54 ph, text width 0.26pw,
+%          minimum height 0.55ph.
+% 2 cards: centres x = 0.27 / 0.73 pw, text width 0.38pw.
+% 4 cards: centres x = 0.13 / 0.38 / 0.62 / 0.87 pw, text width 0.18pw.
+% Fill opacity has no visible effect on black; it is kept so the layout still
+% works if you swap \NoirBackgroundVoid for \NoirBackgroundImage{...}.
+\NoirBackgroundVoid
+\begin{frame}{<<FRAME_TITLE>>}
+\begin{tikzpicture}[remember picture, overlay,
+    infobox/.style={
+        fill=NoirBg, fill opacity=0.72, text opacity=1,
+        rounded corners=6pt,
+        text width=0.26\paperwidth,
+        align=left, inner sep=10pt,
+        anchor=center,
+        minimum height=0.55\paperheight
+    }
+]
+  \node[infobox] at ([xshift=0.17\paperwidth, yshift=-0.54\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<COL_1_HEADING>>}\\[5pt]
+    {\scriptsize\color{NoirText} <<COL_1_TEXT>>}%
+  };
+  \node[infobox] at ([xshift=0.50\paperwidth, yshift=-0.54\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<COL_2_HEADING>>}\\[5pt]
+    {\scriptsize\color{NoirText} <<COL_2_TEXT>>}%
+  };
+  \node[infobox] at ([xshift=0.83\paperwidth, yshift=-0.54\paperheight] current page.north west) {%
+    {\small\bfseries\color{NoirAccent} <<COL_3_HEADING>>}\\[5pt]
+    {\scriptsize\color{NoirText} <<COL_3_TEXT>>}%
+  };
+\end{tikzpicture}
+\end{frame}
+\NoirBackgroundReset

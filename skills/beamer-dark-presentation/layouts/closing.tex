@@ -1,0 +1,22 @@
+% === Slide: Closing ===
+% LAYOUT: closing — black slide, no frame title, big amber call-to-action
+% slightly above centre, references block pinned to the bottom-left.
+% The 40pt call-to-action fits ~14 characters (e.g. "¿Preguntas?", "Thank you!");
+% for longer text drop to \fontsize{28}{34}. Keep references to ~4 entries at
+% this size; otherwise add a separate references slide.
+\NoirBackgroundVoid
+\begin{frame}{}
+\begin{tikzpicture}[remember picture, overlay]
+  \node[font=\fontsize{40}{48}\selectfont\bfseries\color{NoirAccent}]
+      at ([yshift=1.0cm] current page.center) {<<CALL_TO_ACTION>>};
+  \node[anchor=south west, inner sep=10pt,
+        font=\fontsize{5.5}{8}\selectfont\color{NoirMuted},
+        text width=0.93\paperwidth, align=left]
+      at (current page.south west) {%
+    \textbf{\color{NoirText}<<REFERENCES_HEADING>>}\\[3pt]
+    {[1]}\ <<AUTHORS>> (<<YEAR>>). \textit{<<TITLE>>}. \textit{<<VENUE>>}.\\[3pt]
+    {[2]}\ <<AUTHORS>> (<<YEAR>>). \textit{<<TITLE>>}. \textit{<<VENUE>>}.%
+  };
+\end{tikzpicture}
+\end{frame}
+\NoirBackgroundReset

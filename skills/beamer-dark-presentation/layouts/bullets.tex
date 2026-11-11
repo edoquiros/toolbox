@@ -1,0 +1,27 @@
+% === Slide: <<NAME>> ===
+% LAYOUT: bullets — plain text slide on the default NoirBg canvas using the
+% theme's amber itemize markers. The fallback for text-heavy content.
+% Optional right column for an image; delete the second column and the
+% columns environment for a single column.
+\begin{frame}{<<FRAME_TITLE>>}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.55\textwidth}
+    \small
+    \begin{itemize}
+      \item \textbf{\color{NoirAccent}<<POINT_1_LEAD>>} <<POINT_1_TEXT>>
+      \item \textbf{\color{NoirAccent}<<POINT_2_LEAD>>} <<POINT_2_TEXT>>
+        \begin{itemize}
+          \item {\color{NoirMuted}<<SUBPOINT>>}
+        \end{itemize}
+      \item \textbf{\color{NoirAccent}<<POINT_3_LEAD>>} <<POINT_3_TEXT>>
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.42\textwidth}
+    \centering
+    \IfFileExists{<<IMAGE_FILE>>}%
+      {\includegraphics[width=\linewidth]{<<IMAGE_FILE>>}}%
+      {\NoirMissingImage{\linewidth}{0.5\textheight}{<<IMAGE_FILE>>}}
+    \captionof*{figure}{\scriptsize <<CAPTION>>}
+  \end{column}
+\end{columns}
+\end{frame}
